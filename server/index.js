@@ -6,6 +6,7 @@ const cors = require('cors');
 const { connectToMongoDB } = require('./utils');
 const app = express();
 
+const roomRoutes = require('./routes/room.route');
 const decorationRoutes = require('./routes/decoration.route');
 
 app.use(
@@ -17,6 +18,7 @@ app.use(
   )
 );
 
+app.use('/api/rooms', roomRoutes);
 app.use('/api/decoration', decorationRoutes);
 
 app.listen(process.env.PORT || 3001, async () => {
