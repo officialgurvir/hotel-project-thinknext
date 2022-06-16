@@ -22,7 +22,7 @@ export default function Home() {
 
   React.useLayoutEffect(function () {
     const getImages = async function () {
-      const request = await fetch('http://localhost:3001/get/slider_images');
+      const request = await fetch('http://localhost:3001/api/decoration/images');
       const response = await request.json();
 
       return response;

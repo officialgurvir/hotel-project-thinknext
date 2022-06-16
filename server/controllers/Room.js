@@ -49,12 +49,40 @@ class Room {
    * @param {request} req
    * @param {response} res
    */
-   static add(req, res) {
+  static add(req, res) {
     const { type, description, image, isFeatured, services, datesBooked, max } = req.body;
     const isValid = Room.#validateNoFalse({ type, description, image, isFeatured, services, datesBooked, max });
     
     if (!isValid) return res.status(500).json({ err: 'All Room values not provided' });
     RoomModel.create({ type, description, image, isFeatured, services, datesBooked, max }, (err, data) => Room.#response(res, err, data));
+  }
+
+  /**
+   * 
+   * @param {request} req
+   * @param {response} res
+   */
+  static delete(req, res) {
+    const ID = req.params.id;
+    if (!ID) return res.status(500).json({ err: "No id given" });
+
+    RoomModel.deleteOne({ _id: ID }, (err, data) =>
+      Room.#response(res, err, data)
+    );
+  }
+
+  /**
+   * 
+   * @param {request} req
+   * @param {response} res
+   */
+  static update(req, res) {
+    const ID = req.params.id;
+    if (!ID) return res.status(500).json({ err: "No id given" });
+
+    RoomModel.findOneAndUpdate({ _id: ID }, req.body, (err, data) =>
+      Room.#response(res, err, data)
+    );
   }
 }
 
